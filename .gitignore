@@ -1,0 +1,6 @@
+pybin
+*.pyc
+*.db
+*.log
+.vscode
+.env
