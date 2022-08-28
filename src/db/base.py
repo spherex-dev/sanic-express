@@ -11,7 +11,9 @@ Base = declarative_base()
 class SessionManager:
 
     test_db_path = '/tmp/sanic-express-test.db'
-    connDict = {"main": "sqlite:///data/main.db",
+    docker_db_path = "/data/main.db"
+    local_db_path = "data/main.db"
+    connDict = {"main": f"sqlite:///{docker_db_path if os.environ.get('USER') == 'root' else local_db_path}",
                 "test": f"sqlite:///{test_db_path}",
                 }
 
