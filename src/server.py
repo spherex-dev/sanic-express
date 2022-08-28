@@ -29,7 +29,7 @@ class Server:
         self.app = Sanic(name=name)
         self.app.config["DB_ENV"] = env
 
-        self.blueprints = ["records"]
+        self.blueprints = ["records", "echo"]
 
         self.log_format = "%(asctime)s [%(levelname)s]: %(message)s"
         self.log_path = "sanic.log"
@@ -80,4 +80,4 @@ if __name__ == "__main__":
     create_tables()
     os.environ["CORS"] = "http://localhost"
     server = Server("sanic")
-    server.run(auto_reload=False)
+    server.run(auto_reload=True)
