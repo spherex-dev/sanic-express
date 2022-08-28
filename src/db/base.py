@@ -17,7 +17,7 @@ class SessionManager:
                 "test": f"sqlite:///{test_db_path}",
                 }
 
-    connDictAsync = {"main": "sqlite+aiosqlite:///data/main.db",
+    connDictAsync = {"main": f"sqlite+aiosqlite:///{docker_db_path if os.environ.get('USER') == 'root' else local_db_path}",
                      "test": f"sqlite+aiosqlite:///{test_db_path}",
                      }
 

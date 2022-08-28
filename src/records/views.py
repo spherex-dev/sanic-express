@@ -1,13 +1,13 @@
 from db.base import get_async_session
 from db.records import Record
 from sanic.blueprints import Blueprint
-from sanic.response import json
 from sanic.request import Request
+from sanic.response import json
 
 bp = Blueprint("record", url_prefix="api/record/")
 
 
-@bp.route("/put_item", methods=["POST"])
+@bp.route("put_item", methods=["POST"])
 async def put_item(request: Request):
     if request.method == "POST":
         env = request.app.config.get("DB_ENV")
@@ -20,7 +20,7 @@ async def put_item(request: Request):
         return json({"error": "invalid request"})
 
 
-@bp.route("/delete_item", methods=["POST"])
+@bp.route("delete_item", methods=["POST"])
 async def delete_item(request):
     if request.method == "POST":
         env = request.app.config.get("DB_ENV")
@@ -32,7 +32,7 @@ async def delete_item(request):
         return json({"error": "invalid request"})
 
 
-@bp.route("/get_item", methods=["POST"])
+@bp.route("get_item", methods=["POST"])
 async def get_item(request):
     if request.method == "POST":
         env = request.app.config.get("DB_ENV")
@@ -46,7 +46,7 @@ async def get_item(request):
         return json({"error": "invalid request"})
 
 
-@bp.route("/list_items", methods=["POST"])
+@bp.route("list_items", methods=["POST"])
 async def list_items(request):
     if request.method == "POST":
         env = request.app.config.get("DB_ENV")

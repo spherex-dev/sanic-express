@@ -11,16 +11,19 @@
 # particular purpose.
 ###############################################################################
 
-from functools import cached_property
+import os
 import unittest
-from server import Server
+from functools import cached_property
+
 from db.base import session_manager
 from db.records import Record
+from server import Server
 
 
 class Test(unittest.TestCase):
 
     def setUp(self) -> None:
+        os.environ['CORS'] = '*'
         self.server = Server("test", env="test")
 
     @cached_property

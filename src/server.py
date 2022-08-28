@@ -76,7 +76,8 @@ class Server:
 
 
 if __name__ == "__main__":
-    from db.base import session_manager
-    session_manager.create_tables()
+    from db import create_tables
+    create_tables()
+    os.environ["CORS"] = "http://localhost"
     server = Server("sanic")
     server.run(auto_reload=False)
