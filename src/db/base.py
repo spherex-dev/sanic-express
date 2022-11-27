@@ -19,6 +19,7 @@ class SessionManager:
 
     connDictAsync = {"main": f"sqlite+aiosqlite:///{docker_db_path if os.environ.get('USER') == 'root' else local_db_path}",
                      "test": f"sqlite+aiosqlite:///{test_db_path}",
+                     "memory": "sqlite+aiosqlite://",
                      }
 
     def __init__(self):
@@ -57,9 +58,8 @@ class SessionManager:
             connString = self.connDictAsync[env]
             engine = create_async_engine(connString, echo=echo, pool_pre_ping=True)
             self.async_engines[env] = engine
-
         else:
-            engine = self.engines[env]
+            engine = self.async_engines[env]
 
         return engine
 
@@ -77,6 +77,11 @@ class SessionManager:
     def delete_test_db(self):
         if os.path.exists(self.test_db_path):
             os.remove(self.test_db_path)
+
+    async def async_create_tables(self, env="main"):
+        engine = self.get_async_engine(env)
+        async with engine.begin() as conn:
+            await conn.run_sync(Base.metadata.create_all)
 
 
 session_manager = SessionManager()
